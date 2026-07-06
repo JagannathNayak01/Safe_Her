@@ -514,3 +514,10 @@ SafeHer implements a comprehensive loading system for premium user experience:
 ---
 
 *SafeHer — Because every woman deserves to feel safe, everywhere, always.* 💜
+
+
+## 👤 Author
+
+**Jagannath** — [GitHub Profile](https://github.com/JagannathNayak01)
+
+---
