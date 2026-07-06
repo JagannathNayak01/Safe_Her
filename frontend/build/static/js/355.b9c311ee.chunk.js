@@ -1,0 +1,2 @@
+"use strict";(globalThis.webpackChunksafeher_frontend=globalThis.webpackChunksafeher_frontend||[]).push([[355],{2355(e,n,a){a.r(n),a.d(n,{default:()=>t});var r=a(5043),s=a(3216);function t(){const e=(0,s.Zp)();return r.useEffect(()=>{e("/dashboard")},[e]),null}}}]);
+//# sourceMappingURL=355.b9c311ee.chunk.js.map

@@ -1,0 +1,429 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLASSMORPHISM LOADER
+   Full-page frosted-glass overlay with animated shield + bouncing dots.
+   Used for initial page data fetching (Contacts, Profile, etc.)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.glass-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-loader-overlay {
+  background: rgba(7, 11, 21, 0.55);
+}
+
+.glass-loader-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 40px 52px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.dark .glass-loader-card {
+  background: rgba(13, 22, 40, 0.75);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* Animated icon container */
+.glass-loader-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  color: #06b6d4;
+}
+
+.glass-loader-ring {
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba(6, 182, 212, 0.15);
+  border-top-color: #06b6d4;
+  border-radius: 50%;
+  animation: glassLoaderSpin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes glassLoaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dots */
+.glass-loader-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.glass-loader-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06b6d4, #a855f7);
+}
+
+.glass-loader-text {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.02em;
+}
+
+.dark .glass-loader-text {
+  color: #94a3b8;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SKELETON CARD (reusable)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.skel-card {
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.dark .skel-card {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(13, 22, 40, 0.5);
+}
+
+.skel-card-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.skel-card-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROFILE SKELETON (full page)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.profile-skel-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 2rem;
+}
+
+.profile-skel-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.profile-skel-header-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-skel-card {
+  padding: 28px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.dark .profile-skel-card {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(13, 22, 40, 0.5);
+}
+
+.profile-skel-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTACTS TABLE SKELETON ROWS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.skeleton-row td {
+  padding: 14px 10px;
+}
+
+.skeleton-row .skeleton-base {
+  margin: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTON LOADING STATE
+   Universal .btn-loading class adds a spinner + disables interaction.
+   Usage: <button className="... btn-loading" disabled>
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn-loading::after {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-left: 8px;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btnSpin 0.6s linear infinite;
+  vertical-align: middle;
+}
+
+/* For outlined / light buttons, dark spinner */
+.btn-loading--dark::after {
+  border-color: rgba(15, 23, 42, 0.15);
+  border-top-color: #0f172a;
+}
+
+@keyframes btnSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── SOS button loading pulse ── */
+.sos-btn-loading {
+  animation: sosBtnPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes sosBtnPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 40px rgba(244, 63, 94, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 80px rgba(244, 63, 94, 0.8), 0 0 120px rgba(244, 63, 94, 0.3);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTACTS PAGE — TABLE LOADING SKELETON
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.contacts-table-loading {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contacts-table-loading .skeleton-row:nth-child(odd) .skeleton-base {
+  animation-delay: 0.15s;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROFILE AVATAR ENLARGE + LIGHTBOX
+   Click avatar to open full-size image in a glassmorphic overlay.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Enlarge hint icon on hover */
+.profile-avatar-clickable {
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-avatar-enlarge-hint {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 50%;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+
+.profile-avatar-clickable:hover .profile-avatar-enlarge-hint {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Lightbox overlay */
+.profile-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Lightbox card */
+.profile-lightbox-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Close button */
+.profile-lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  color: #f1f5f9;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.profile-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* Enlarged image */
+.profile-lightbox-img {
+  max-width: min(85vw, 420px);
+  max-height: min(70vh, 420px);
+  border-radius: 1.25rem;
+  object-fit: cover;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Name below image */
+.profile-lightbox-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRIORITY BADGES (Contacts table)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.priority-badge--primary {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.dark .priority-badge--primary {
+  background: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.priority-badge--secondary {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.dark .priority-badge--secondary {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ESCALATION INFO (SOS Modal success stage)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.sos-escalation-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin: 8px 0;
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #d97706;
+}
+
+.dark .sos-escalation-info {
+  background: rgba(245, 158, 11, 0.08);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.18);
+}
